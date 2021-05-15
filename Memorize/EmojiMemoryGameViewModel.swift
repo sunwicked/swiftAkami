@@ -7,14 +7,16 @@
 
 import SwiftUI
 
-class EmojiMemoryGame{
+class EmojiMemoryGameViewModel:ObservableObject{
+    
+   @Published private var model:MemoryGame<String> = EmojiMemoryGameViewModel.createMemoryGame()
     
     
     func createCardContentFactory(pairIndex:Int)->String{
         return "😂"
     }
     
-    private var model:MemoryGame<String> = EmojiMemoryGame.createMemoryGame()
+   
     
     static func  createMemoryGame() -> MemoryGame<String>{
         let emojis = ["😂","👻","👀"]
@@ -28,6 +30,7 @@ class EmojiMemoryGame{
     }
     
     func chooseCard(card:MemoryGame<String>.Card){
+        objectWillChange.send()
         model.choose(card:card)
     }
 }
